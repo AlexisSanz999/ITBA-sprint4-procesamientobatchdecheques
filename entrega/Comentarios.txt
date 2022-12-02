@@ -1,0 +1,35 @@
+* Se debería chequear que el programa haya sido invocado con todos los parámetros obligatorios.
+
+Actualmente si se ejecuta el programa como python3 listado_chesques.py tira una excepción.
+
+try:
+
+archivo, dni, salida, tipo, *opcionales = argv[1:]
+
+except:
+
+raise ValueError("Faltan parámetros obligatorios")
+
+Ahi lo que están haciendo es volver a lanzar la excepción. Osea están atrapando esta excepción ValueError: not enough values to unpack (expected at least 4, got 0), y a su vez estan volviendo
+
+a lanzar otra excepción que al no estar atrapada hace que el programa termine con error. Lo que debieran hacer en el except es un print de pantalla indicando el error y hacer un exit(1) para que 
+
+el programa termine con error.
+
+* Se debería chequear que el archivo pasado como parametro existe. Ejecutar el programa así:
+
+python3 listado_cheques.py dasdasd.csv 28500037 PANTALLA DEPOSITADO, siendo dasdasd.csv un archivo que no existe tira una excepción
+
+try:
+
+f = open(archivo, "r")
+
+f.close()
+
+except:
+
+raise ValueError("El archivo no existe")
+
+Misma situacion acá. Se está atrapando la excepción y se esta volviendo a lanzar otra excepción. Ademas de que no es correcto abrir el archivo para verificar su existencia, se debe utilizar la funcion
+
+os.path.exists(path_to_file)
